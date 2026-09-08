@@ -1,0 +1,227 @@
+Updated review result
+The current main branches and PR #7 have been reviewed.
+
+The VLT repository now states that Ethereum mainnet, chain ID 1, is the only approved VLT deployment network. PR #7 was merged into Vault-Coin-VLT-project on September 7, 2026. It removed the Sepolia deployment/preflight workflow, Sepolia scripts, and Sepolia-specific tests. 
+
+However, there is an important distinction:
+
+Mainnet-only is now confirmed as the VLT authorization policy. It is not yet true of the SafeVault frontend configuration.
+
+The current SafeVault runtime still supports both chain ID 1 and Sepolia 11155111, and its default remains Sepolia. Blockchain writes are still disabled. 
+ 
+
+SafeVault itself was not updated by PR #7. Its most recent repository update remains the Phase 1 frontend foundation, while the VLT repository received the new network-policy correction.
+
+What PR #7 changed
+The merged VLT correction did four major things:
+
+Declared Ethereum mainnet as the only approved VLT network.
+Removed the Sepolia preflight workflow and Sepolia deployment path.
+Renamed the deployment environment variable from RPC_URL to ETHEREUM_RPC_URL.
+Reframed owner authorization as an authorized Owner SafeWallet or MetaMask address on Ethereum mainnet.
+The current VLT deployment guide also states:
+
+VLT is not deployed.
+No proxy address is recorded.
+No implementation address is recorded.
+No deployment transaction is recorded.
+No live RPC access, simulation, signature, or broadcast is authorized by the document.
+The existing deployment script only accepts Foundry’s local chain ID 31337. 
+So the current status is:
+
+Authorized production network: Ethereum mainnet
+Live VLT deployment:            None
+SafeVault production writes:    Disabled
+Local rehearsal:                Allowed on chain ID 31337
+Sepolia VLT deployment:         Removed
+
+The VLT repository also marks its previous test and coverage evidence as historical rather than a current retest of the correction set. That means PR #7 changed the deployment boundary, but the corrected repository still requires a fresh validation run before any deployment decision. 
+
+How Vault utilizes RPC and third-party infrastructure
+The Vault should use RPC infrastructure as a connection to Ethereum, not as a place where user assets or signing authority are stored.
+
+Reading public blockchain data
+The Vault needs an RPC provider or blockchain indexer to retrieve:
+
+wallet balances
+token balances
+NFT ownership
+transaction history
+token metadata
+contract state
+gas estimates
+transaction receipts
+event logs
+The flow is:
+
+Vault interface
+      |
+      | public JSON-RPC requests
+      v
+RPC provider / blockchain indexer
+      |
+      | reads Ethereum mainnet
+      v
+Ethereum mainnet
+
+The request may include:
+
+a public wallet address
+a contract address
+a token ID
+a block number
+a transaction hash
+It must never include:
+
+private keys
+seed phrases
+raw VaultKeys
+wallet passwords
+decrypted keystores
+Signing a transaction
+The RPC provider does not sign for the user.
+
+The signing path should be:
+
+Vault prepares transaction
+      |
+      v
+Connected user wallet
+      |
+      | user approves or rejects
+      v
+Signed transaction
+      |
+      v
+RPC provider relays signed transaction
+      |
+      v
+Ethereum mainnet
+
+The RPC provider can relay the signed transaction, but it should not be able to create a valid signature on behalf of the user.
+
+Why use more than one RPC provider
+A single RPC provider creates an availability and trust dependency. A production Vault should eventually support:
+
+primary RPC provider
+fallback RPC provider
+health checks
+rate-limit handling
+request timeouts
+chain ID verification
+response consistency checks
+For important reads, the Vault can compare responses from multiple providers or verify data against Ethereum explorer and contract events.
+
+The Vault should never silently change from Ethereum mainnet to another network because an RPC provider failed.
+
+How Vault would be different from an ordinary wallet
+The Vault would still use standard wallet protocols, but it would be specialized around the BlackVault ecosystem and VLT.
+
+A general wallet typically provides:
+
+account connection
+asset balances
+send and receive
+transaction signing
+network switching
+token and NFT support
+The Vault would add:
+
+SafeVault-branded interface
+Ethereum-mainnet-only VLT production configuration
+VLT-specific deployment manifest
+VLT contract verification
+warnings about VLT owner powers
+clear separation between user wallets and the VLT owner wallet
+BlackVault ecosystem separation from rewards, affiliate, payment, and treasury systems
+Vault-specific activity and security explanations
+deployment-status messaging
+The Vault should never imply that connecting to VLT gives the user control over VLT’s administrative functions. A user may control their own wallet and VLT balance, while the VLT owner retains separate contract-level powers such as pausing, blacklisting, minting, administrative burn, seizure, and upgrades. 
+
+How the Vault would be used inside SafeVault
+SafeVault should become the application shell around the Vault experience.
+
+User flow
+Open SafeVault
+
+The user sees Ethereum mainnet as the production network.
+SafeVault displays whether VLT has a verified deployment record.
+Connect a wallet
+
+The user connects MetaMask, Coinbase Wallet, Trust Wallet, Ledger, or another compatible EVM wallet.
+SafeVault receives the public address only.
+Create a Vault session
+
+SafeVault associates the connected public address with a Vault session.
+The session is not a private key and cannot sign by itself.
+Read assets
+
+SafeVault queries Ethereum mainnet through RPC or an indexer.
+It displays ETH, approved ERC-20 assets, NFTs, and VLT once VLT is actually deployed and verified.
+Prepare a transaction
+
+The user selects an asset and destination.
+SafeVault validates the destination, amount, network, token contract, and estimated fee.
+Review
+
+SafeVault shows:
+Ethereum mainnet
+asset name and contract
+destination address
+amount
+gas estimate
+transaction type
+relevant VLT warnings
+Sign
+
+The connected wallet opens its own approval window.
+The user signs or rejects.
+SafeVault cannot bypass this step.
+Broadcast and monitor
+
+The signed transaction is sent through an RPC provider.
+SafeVault tracks the hash until it is pending, confirmed, failed, replaced, or dropped.
+SafeVault’s documented framework already describes this general model: read public chain data, prepare a transaction, display the critical details, let the user’s wallet sign or reject, and show independently verifiable status. 
+
+The configuration issue that must be resolved
+The current repositories now have two different network positions:
+
+Area	Current position
+VLT authorization policy	Ethereum mainnet only
+VLT deployment guide	Ethereum mainnet only
+VLT Sepolia workflow	Removed
+SafeVault runtime	Mainnet and Sepolia
+SafeVault default	Sepolia
+SafeVault blockchain writes	Disabled
+VLT deployment	None
+The SafeVault production configuration should therefore be changed to:
+
+SUPPORTED_CHAIN_IDS = [1]
+VITE_DEFAULT_CHAIN_ID = 1
+
+Local development can still use a local Foundry chain or mocks, but that should be explicitly separated from production configuration. If Sepolia is retained for unrelated SafeVault testing, it should not appear as an approved VLT deployment network or production option.
+
+There is also an authorization-definition issue to resolve. The updated VLT documents refer to an Owner SafeWallet or MetaMask address, while the deployment script and environment example still contain a specific hardcoded owner address. That address, wallet type, signing process, and approval policy should be formally reconciled before deployment. The VLT contract itself does not verify a Safe threshold or multisignature policy. 
+
+Visual and spreadsheet deliverables
+I generated and attached:
+
+Vault visual report — a self-contained HTML report combining the architecture, transaction workflow, and network-policy review.
+Vault mainnet concept artwork — a visual representation of the user-controlled Vault connected to Ethereum.
+Vault mainnet architecture diagram — shows the user wallet, Vault, RPC/indexer, Ethereum mainnet, and VLT proxy.
+Vault transaction workflow diagram — shows connect, read, prepare, review, sign, broadcast, and monitor.
+Vault network-policy diagram — highlights the mainnet-only VLT policy versus the still-Sepolia-default SafeVault runtime.
+Vault implementation planning workbook — Excel workbook with repository findings, architecture components, transaction workflow, network policy, and security gates.
+The most important visual conclusion is:
+
+User wallet holds signing authority
+              ↓
+        Vault prepares
+              ↓
+       User approves
+              ↓
+     RPC relays signed tx
+              ↓
+      Ethereum mainnet settles
+
+Recommended next step: reconcile safevault-deployment to a mainnet-only production configuration before adding wallet-connection code, then create a verified VLT deployment manifest that SafeVault can trust.
