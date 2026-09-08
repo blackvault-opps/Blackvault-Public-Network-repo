@@ -1,0 +1,95 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="940" viewBox="0 0 1600 940" role="img" aria-labelledby="title desc">
+  <title id="title">Vault transaction workflow</title>
+  <desc id="desc">A seven-step workflow from connecting a wallet to monitoring a confirmed Ethereum mainnet transaction.</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#08111f"/><stop offset="1" stop-color="#101a31"/></linearGradient>
+    <linearGradient id="card" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#173252"/><stop offset="1" stop-color="#13243e"/></linearGradient>
+    <filter id="shadow"><feDropShadow dx="0" dy="10" stdDeviation="12" flood-color="#000" flood-opacity=".32"/></filter>
+    <marker id="arrow" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto"><path d="M0,0 L12,6 L0,12 Z" fill="#5ebcff"/></marker>
+    <style>
+      .h { font: 700 32px Inter, Arial, sans-serif; fill: #f6f9ff; }
+      .t { font: 500 20px Inter, Arial, sans-serif; fill: #d7e5f5; }
+      .s { font: 500 16px Inter, Arial, sans-serif; fill: #9db1cb; }
+      .num { font: 800 29px Inter, Arial, sans-serif; fill: #091321; }
+      .title { font: 700 22px Inter, Arial, sans-serif; fill: #ffffff; }
+      .caps { font: 700 14px Inter, Arial, sans-serif; letter-spacing: 2px; fill: #7ed1ff; }
+    </style>
+  </defs>
+  <rect width="1600" height="940" fill="url(#bg)"/>
+  <text x="90" y="78" class="caps">VAULT · USER-AUTHORIZED TRANSACTION</text>
+  <text x="90" y="130" class="h">Every state-changing action stops at the user’s wallet.</text>
+  <text x="90" y="169" class="t">Vault can read, prepare, explain, and monitor. The connected wallet signs or rejects.</text>
+
+  <g filter="url(#shadow)">
+    <rect x="90" y="250" width="330" height="210" rx="24" fill="url(#card)" stroke="#4db7ff" stroke-width="2"/>
+    <circle cx="145" cy="305" r="30" fill="#56b7ff"/><text x="134" y="315" class="num">1</text>
+    <text x="195" y="308" class="title">Connect</text>
+    <text x="125" y="355" class="t">User connects a wallet</text>
+    <text x="125" y="389" class="s">Vault sees public address only</text>
+    <text x="125" y="420" class="s">Network: Ethereum mainnet</text>
+  </g>
+  <g filter="url(#shadow)">
+    <rect x="465" y="250" width="330" height="210" rx="24" fill="url(#card)" stroke="#4db7ff" stroke-width="2"/>
+    <circle cx="520" cy="305" r="30" fill="#56b7ff"/><text x="509" y="315" class="num">2</text>
+    <text x="570" y="308" class="title">Read</text>
+    <text x="500" y="355" class="t">Vault queries RPC/indexer</text>
+    <text x="500" y="389" class="s">Balances · assets · history</text>
+    <text x="500" y="420" class="s">No signing capability</text>
+  </g>
+  <g filter="url(#shadow)">
+    <rect x="840" y="250" width="330" height="210" rx="24" fill="url(#card)" stroke="#4db7ff" stroke-width="2"/>
+    <circle cx="895" cy="305" r="30" fill="#56b7ff"/><text x="884" y="315" class="num">3</text>
+    <text x="945" y="308" class="title">Prepare</text>
+    <text x="875" y="355" class="t">Build transaction request</text>
+    <text x="875" y="389" class="s">Asset · destination · amount</text>
+    <text x="875" y="420" class="s">Fee estimate · simulation</text>
+  </g>
+  <g filter="url(#shadow)">
+    <rect x="1215" y="250" width="295" height="210" rx="24" fill="url(#card)" stroke="#39e6b0" stroke-width="2"/>
+    <circle cx="1270" cy="305" r="30" fill="#39e6b0"/><text x="1259" y="315" class="num">4</text>
+    <text x="1320" y="308" class="title">Review</text>
+    <text x="1250" y="355" class="t">Human-readable summary</text>
+    <text x="1250" y="389" class="s">Network and contract</text>
+    <text x="1250" y="420" class="s">Destination and fee</text>
+  </g>
+
+  <path d="M420 355 H455" stroke="#5ebcff" stroke-width="5" marker-end="url(#arrow)"/>
+  <path d="M795 355 H830" stroke="#5ebcff" stroke-width="5" marker-end="url(#arrow)"/>
+  <path d="M1170 355 H1205" stroke="#5ebcff" stroke-width="5" marker-end="url(#arrow)"/>
+
+  <g filter="url(#shadow)">
+    <rect x="90" y="600" width="330" height="210" rx="24" fill="url(#card)" stroke="#f0b45b" stroke-width="2"/>
+    <circle cx="145" cy="655" r="30" fill="#f0b45b"/><text x="134" y="665" class="num">5</text>
+    <text x="195" y="658" class="title">Sign or reject</text>
+    <text x="125" y="705" class="t">Wallet opens approval</text>
+    <text x="125" y="739" class="s">Private key stays with user</text>
+    <text x="125" y="770" class="s">Rejection ends the flow safely</text>
+  </g>
+  <g filter="url(#shadow)">
+    <rect x="465" y="600" width="330" height="210" rx="24" fill="url(#card)" stroke="#39e6b0" stroke-width="2"/>
+    <circle cx="520" cy="655" r="30" fill="#39e6b0"/><text x="509" y="665" class="num">6</text>
+    <text x="570" y="658" class="title">Broadcast</text>
+    <text x="500" y="705" class="t">Signed transaction sent</text>
+    <text x="500" y="739" class="s">Ethereum mainnet receives it</text>
+    <text x="500" y="770" class="s">Vault stores tx hash only</text>
+  </g>
+  <g filter="url(#shadow)">
+    <rect x="840" y="600" width="330" height="210" rx="24" fill="url(#card)" stroke="#4db7ff" stroke-width="2"/>
+    <circle cx="895" cy="655" r="30" fill="#56b7ff"/><text x="884" y="665" class="num">7</text>
+    <text x="945" y="658" class="title">Monitor</text>
+    <text x="875" y="705" class="t">Pending → confirmed</text>
+    <text x="875" y="739" class="s">Receipt, confirmations, explorer</text>
+    <text x="875" y="770" class="s">Failed states remain visible</text>
+  </g>
+  <g filter="url(#shadow)">
+    <rect x="1215" y="600" width="295" height="210" rx="24" fill="#281f30" stroke="#ff7f8a" stroke-width="2"/>
+    <text x="1250" y="658" class="title" fill="#ffb6bd">Never happens</text>
+    <text x="1250" y="705" class="t">Vault silently signs</text>
+    <text x="1250" y="739" class="t">Vault holds user keys</text>
+    <text x="1250" y="773" class="t">Backend moves assets</text>
+  </g>
+  <path d="M1510 705 C1550 705 1550 530 1400 470" fill="none" stroke="#ff7f8a" stroke-width="3" stroke-dasharray="8 10"/>
+  <path d="M1170 705 H1205" stroke="#5ebcff" stroke-width="5" marker-end="url(#arrow)"/>
+  <path d="M795 705 H830" stroke="#5ebcff" stroke-width="5" marker-end="url(#arrow)"/>
+  <path d="M420 705 H455" stroke="#5ebcff" stroke-width="5" marker-end="url(#arrow)"/>
+</svg>
