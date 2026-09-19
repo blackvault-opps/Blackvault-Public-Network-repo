@@ -18,22 +18,13 @@ This repository documents the current public framework, project relationships, d
 
 ## Ecosystem Relationship
 
-```text
-BlackVault Public Network
-|
-+-- SafeVault
-|   +-- BlackVault Smart Account
-|   +-- Vault Coin
-|   +-- FUNTOKEN
-|   +-- Connected External Wallets
-|   `-- Vault AI integration
-|
-+-- Vault Coin (VLT)
-|
-+-- FUNTOKEN (FUN)
-|
-`-- Vault AI
-```
+| Relationship | How the projects connect |
+| --- | --- |
+| SafeVault and Homebase | Primary BlackVault smart account and asset workspace |
+| SafeVault and external wallets | Optional connections retaining separate account identities |
+| SafeVault and VLT / FUN | Separate token integrations with explicit network and contract identity |
+| Vault AI and SafeVault | Workspace assistance, public evidence, and prepared wallet handoffs |
+| BlackVault Public Network and each project | Shared product framework with separate implementation records |
 
 The projects retain separate technical responsibilities while presenting a coordinated BlackVault user experience.
 
@@ -41,7 +32,7 @@ The projects retain separate technical responsibilities while presenting a coord
 
 SafeVault is designed as the **BlackVault smart account from the beginning**.
 
-A user's SafeVault is intended to be the primary BlackVault blockchain account experience rather than an interface that requires a third-party wallet as its starting point.
+Homebase is the planned primary BlackVault smart-account experience. Application signup/login, smart-account initialization, and blockchain authorization are separate operations. Connecting an existing wallet is optional, and each connected address retains its own network and assets.
 
 The planned SafeVault experience includes:
 
@@ -109,7 +100,7 @@ Current recorded project facts include:
 
 # Vault AI™
 
-Vault AI is BlackVault Public Network's intelligent operations and blockchain discovery layer.
+Vault AI is BlackVault Public Network's workspace agent for approved knowledge, operational assistance, and public blockchain discovery. Botpress configures its instructions, workflows, case records, and tool bindings; wallet execution remains in the SafeVault account layer.
 
 Its planned application responsibilities include:
 
@@ -125,7 +116,9 @@ Its planned application responsibilities include:
 
 Vault AI separates **discovery and preparation** from **account authorization**. SafeVault remains the account layer responsible for reviewing and authorizing protected account actions.
 
-The current Vault AI Botpress configuration and application handoff package is maintained in the BlackVault Public Network site repository.
+The current Vault AI Botpress package is maintained in the application implementation repository. It contains Etherscan read-helper source and a claim-indicator classifier. Workspace connection, persistent storage, a deployed `/scan` and `/details` service, and protocol-specific eligibility each require their own implementation evidence.
+
+See the [Vault AI capability status](docs/VAULT_AI.md) and [repository index](docs/REPOSITORY_INDEX.md).
 
 [BlackVault Public Network Site Repository](https://github.com/blackvault-opps/BlackVault-Public-Network-site-repo)
 
@@ -181,6 +174,8 @@ SafeVault application components are also developed in the private `safevault-de
 [FUNTOKEN Technical Repository](https://github.com/blackvault-opps/FUN-TOKEN-ERC-20-Report-Repo)
 
 # Documentation Position
+
+Updated 2026-09-18. The repository index records all nine project repositories, their purposes, and their current documentation roles. Historical prototypes are marked separately.
 
 Current documentation should reflect the confirmed five-part ecosystem:
 
