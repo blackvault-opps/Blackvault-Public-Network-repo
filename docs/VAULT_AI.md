@@ -1,113 +1,44 @@
-# Vault AI™
+# Vault AI — Workspace and Asset Discovery
 
-Vault AI is the intelligent operations and blockchain-discovery layer of BlackVault Public Network.
+**Updated:** 2026-09-18
 
-## Purpose
+Vault AI is the BlackVault workspace agent for approved knowledge, operational assistance, and public blockchain evidence. The current Botpress work configures its identity, instructions, knowledge, routes, tool bindings, and investigation records.
 
-Vault AI provides a conversational interface for navigating BlackVault project information and analyzing public blockchain records.
+## Role in SafeVault
 
-Its initial application scope includes:
+SafeVault Homebase is the primary BlackVault smart account. Existing wallets are optional separate connections. Vault AI explains context and prepares supported handoffs; the account system manages user authorization and execution. Workspace roles and VLT owner controls are distinct from each user's wallet authority.
 
-- ecosystem Q&A;
-- public wallet/address inspection;
-- native and token balance discovery;
-- transaction-history analysis;
-- transaction explanation;
-- ERC-20 transfer discovery;
-- contract inspection;
-- potential claim-indicator analysis;
-- persistent asset-case organization; and
-- SafeVault workflow preparation.
+## Current source and integration position
 
-## Operating Model
+| Area | Current position |
+| --- | --- |
+| Botpress instructions and workflows | Configuration specifications are present in the application repository |
+| Etherscan read helpers | Source includes address syntax, native balance, normal history, ERC-20 transfers, source metadata, and receipt lookup |
+| Claim indicators | Source classifier identifies visible assets and possible indicators from supplied evidence |
+| Current token holdings | Full holdings enumeration is not implemented in the reviewed action facade |
+| Case records and handoffs | Schemas/workflows documented; runtime storage and wallet bindings pending validation |
+| Scan service | `/scan` and `/details` remain proposed interfaces; no deployed base URL is established by the source |
+| Validated eligibility | Requires a supported protocol adapter and current wallet-specific evidence |
 
-```text
-User
- |
- v
-Vault AI
- |
- +-- Knowledge
- +-- Address Discovery
- +-- Transaction Analysis
- +-- Contract Inspection
- +-- Token Transfer Discovery
- +-- Claim Analysis
- |
- v
-SafeVault Handoff
- |
- v
-Review / Account Authorization
-```
+Knowledge preparation can proceed while live connections are pending. Etherscan is the data provider/explorer; it is not the BlackVault service endpoint. The current source may support direct server-side read-action bindings independently of a later scan service.
 
-Vault AI's application role is discovery, analysis, explanation, and preparation. SafeVault is the account environment that receives transaction/action handoffs.
+## Evidence model
 
-## Botpress Architecture
+| Finding | Required interpretation |
+| --- | --- |
+| Asset visible | A holding or transfer was observed at a particular address and chain. |
+| Candidate claim | A contract or protocol indicator supports further investigation. |
+| Validated eligibility | A supported contract adapter has checked the exact network, wallet entitlement, token, amount, recipient, required proof, relevant state, and a current simulation where applicable. |
+| Confirmed recovery | Execution succeeded and the expected asset movement or protocol outcome was verified. |
 
-The Vault AI Botpress package is organized around:
+A positive token balance, an ABI method name, or source-code verification alone does not establish claim eligibility. Preserve evidence sources, the queried block/time, and scan coverage. An unavailable provider or unsupported protocol produces an incomplete/unsupported result rather than a conclusion that no assets exist. Unknown values remain explicitly pending.
 
-- agent configuration;
-- Studio instructions;
-- workflow definitions;
-- persistent tables;
-- knowledge sources;
-- normalized blockchain actions;
-- conversation routing; and
-- SafeVault handoff records.
+## Networks
 
-### Initial workflows
+Initial recovery targets Ethereum mainnet (`1`). FUN discovery uses a separate explicit Sepolia (`11155111`) context. The current helper source does not provide Polygon/BSC adapters or an all-chain scan.
 
-1. Main Router
-2. Asset Discovery
-3. Transaction Inspection
-4. Contract Inspection
-5. Claim Analysis
-6. SafeVault Handoff
-7. Case Continuation
+## Knowledge and workspace continuity
 
-### Initial persistent data
+Keep approved architecture, historical records, source implementation, configured tools, and live blockchain evidence distinguishable. Record source versions, account/network context, and coverage. The broader browser-workspace extension, device pairing, scheduling, and additional connectors remain separately tracked implementation features.
 
-- `asset_cases`
-- `verified_contracts`
-- `scan_results`
-- `safevault_handoffs`
-
-### Initial blockchain actions
-
-- `validatePublicAddress`
-- `getNativeBalance`
-- `getTokenBalances`
-- `getTransactionHistory`
-- `getTransactionDetails`
-- `inspectContract`
-- `inspectTokenTransfers`
-- `createAssetCase`
-- `updateAssetCase`
-- `prepareSafeVaultHandoff`
-
-## Provider Model
-
-Provider-specific blockchain responses should be normalized before they reach the conversational reasoning layer.
-
-The first discovery provider may use Etherscan together with configured Ethereum/Sepolia RPC or indexing services.
-
-Configuration values such as API credentials and RPC endpoints are supplied through environment/configuration variables.
-
-## BlackVault Knowledge Sources
-
-Vault AI knowledge should distinguish:
-
-- BlackVault Public Network documentation;
-- SafeVault architecture;
-- Vault Coin canonical technical documentation;
-- FUNTOKEN deployment records; and
-- Vault AI operational documentation.
-
-Verified on-chain data remains separate from descriptive project documentation.
-
-## Current Implementation Position
-
-The Botpress configuration/handoff package is present in `blackvault-opps/BlackVault-Public-Network-site-repo` under `botpress-vault-ai/`.
-
-The next implementation stage is the executable provider-action layer that connects the defined actions to Etherscan/RPC data and returns normalized results to Botpress.
+[Vault AI workspace overview](https://github.com/blackvault-opps/Vault-AI-Extension-Public-Deployment-Repo) · [SafeVault architecture](SAFEVAULT_SMART_ACCOUNT.md) · [Repository index](REPOSITORY_INDEX.md)

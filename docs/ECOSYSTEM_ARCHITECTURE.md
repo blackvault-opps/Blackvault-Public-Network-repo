@@ -1,49 +1,54 @@
 # BlackVault Public Network — Ecosystem Architecture
 
-## Current Confirmed Framework
+**Updated:** 2026-09-18
 
-```text
-BlackVault Public Network
-|
-+-- SafeVault
-|   +-- BlackVault Smart Account
-|   +-- Vault Coin integration
-|   +-- FUNTOKEN integration
-|   +-- Connected External Wallets
-|   `-- Vault AI handoff
-|
-+-- Vault Coin (VLT)
-|   `-- Ethereum Mainnet production-token project
-|
-+-- FUNTOKEN (FUN)
-|   `-- Sepolia testnet experience
-|
-`-- Vault AI
-    `-- Intelligent operations and blockchain discovery
-```
+| Component | Responsibility |
+| --- | --- |
+| BlackVault Public Network | Ecosystem identity, application framework, and documentation |
+| SafeVault | Homebase, external wallet connections, asset presentation, review, and account authorization |
+| Vault AI | Workspace assistance, approved knowledge, public-data discovery, evidence explanation, and prepared handoffs |
+| Discovery/claim backend | Provider requests, contract-specific eligibility checks, and structured evidence |
+| Wallet execution infrastructure | Validate holder authorization, submit approved operations, and return execution evidence |
 
-## BlackVault Public Network
+Workspace administrator permissions, VLT contract-owner powers, and individual wallet authority are separate. Signing credentials remain within the holder's chosen wallet/authentication system. Future automated execution requires separately enabled, limited, revocable permissions enforced by the actual account execution layer.
 
-Provides the public ecosystem identity, application framework, project navigation, and documentation layer.
+## SafeVault account model
 
-## SafeVault
+SafeVault has two wallet layers:
 
-Provides the user's BlackVault smart-account, asset dashboard, transaction review, account activity, connected-wallet management, and integration surfaces for Vault Coin, FUNTOKEN, and Vault AI.
+1. **Homebase — the primary BlackVault smart account.** A user signs in to the BlackVault application to reach their Homebase workspace, assets, activity, and account controls. The approved product direction starts with a holder-controlled smart account. Application login, account initialization, and blockchain authorization are separate operations.
+2. **Connected external wallets — an optional second layer.** Existing compatible wallets retain their own addresses, networks, balances, and permissions. Connecting one enables supported visibility and interaction; moving assets into Homebase is a separately authorized transfer.
 
-## Vault Coin
+The primary design uses an ERC-4337-style account model. Optional EIP-7702 support for compatible external EOAs is a separate integration proposal. A connected wallet is not evidence of an active delegation. Account deployment timing, gas arrangements, authentication/recovery, and infrastructure providers remain implementation selections.
 
-Vault Coin (VLT) is the production-token project. Its approved production network is Ethereum Mainnet, chain ID 1. Its canonical technical repository remains the authority for the current smart-contract implementation and deployment status.
+Assets remain recorded on their respective blockchains. Homebase brings those records into a coordinated interface; signing in does not merge accounts or transfer balances.
 
-## FUNTOKEN
+## Network and asset identity
 
-FUNTOKEN (FUN) is the Sepolia testnet experience. It provides deployed token contracts and an experimental environment for wallet, interface, delegation-history, and ecosystem integration work.
+| Context | Network | Configuration status |
+| --- | --- | --- |
+| Vault Coin (VLT) | Ethereum mainnet, `1` | Production proxy and deployment receipt pending |
+| FUNTOKEN (FUN) | Sepolia, `11155111` | Three recorded deployments; shared canonical address pending owner selection |
+| Initial Vault AI recovery workflow | Ethereum mainnet, `1` | First supported claim contract and live connection pending validation |
+| FUN discovery and development | Sepolia, `11155111` | Separate, explicitly selected testnet context |
 
-## Vault AI
+Identify every asset by chain ID and full contract address. A token symbol alone is insufficient. Additional networks require their own supported provider and contract configuration.
 
-Vault AI provides intelligent project navigation and blockchain discovery. It can organize public evidence and prepare SafeVault handoffs while keeping the account authorization layer separate.
+## Agent and wallet integration
 
-## Historical Models
+Botpress configures the Vault AI workspace agent. It can prepare knowledge and workflows before external services are available. Public read helpers and a claim-indicator classifier are present in the application source; they are distinct from a deployed scan API and from wallet-specific claim validation.
 
-The historical Rewards Network, cards, Telegram Stars, and earlier payment-network concepts are not part of this current framework.
+| Finding | Required interpretation |
+| --- | --- |
+| Asset visible | A holding or transfer was observed at a particular address and chain. |
+| Candidate claim | A contract or protocol indicator supports further investigation. |
+| Validated eligibility | A supported contract adapter has checked the exact network, wallet entitlement, token, amount, recipient, required proof, relevant state, and a current simulation where applicable. |
+| Confirmed recovery | Execution succeeded and the expected asset movement or protocol outcome was verified. |
 
-Vault Coin Rewards may be represented inside SafeVault as a Vault Coin product feature.
+A positive token balance, an ABI method name, or source-code verification alone does not establish claim eligibility. Preserve evidence sources, the queried block/time, and scan coverage. An unavailable provider or unsupported protocol produces an incomplete/unsupported result rather than a conclusion that no assets exist. Unknown values remain explicitly pending.
+
+## Current product boundaries
+
+Vault Coin Rewards is a separate planned token/product surface. Historical Rewards Network, cards, Telegram Stars, and gameplay prototypes remain outside the current framework. Existing historical repositories are reference material rather than active deployment dependencies.
+
+See [repository index](REPOSITORY_INDEX.md), [SafeVault](SAFEVAULT_SMART_ACCOUNT.md), [Vault AI](VAULT_AI.md), and [FUNTOKEN](FUNTOKEN.md).

@@ -42,3 +42,7 @@ Vault AI may inspect FUNTOKEN balances, transfers, deployment transactions, cont
 ## Canonical Technical Source
 
 [FUNTOKEN Technical Repository](https://github.com/blackvault-opps/FUN-TOKEN-ERC-20-Report-Repo)
+
+## Recovery and account interpretation
+
+A FUN balance is an existing holding, not proof of an unclaimed allocation. The recorded FUN contracts expose token functions; the deploying wallet's EIP-7702 history is a separate account capability. Initial Vault AI mainnet recovery and FUN Sepolia discovery use separate network contexts. Canonical-address selection, wallet display, and live integration remain individually recorded milestones.
